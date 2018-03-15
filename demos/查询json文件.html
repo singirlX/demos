@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查询JSON文件</title>
+<style>
+div{
+	font-size:10px;
+}
+select{
+	border:1px solid red
+}
+a{
+	width:100px;height:30px;
+	border:5px solid red;
+}
+</style>
+</head>
+
+<body>
+	<h6>请在下方选项中选择对应数据获取符合该“空气质量指标”的城市列表</h6>
+    <select style="width:100px;height:35px;margin-bottom:10px;margin-top:-10px">
+    	<option value="all">all</option>
+     	<optgroup label="优">
+        	<option value="30">30-40</option>
+            <option value="40">40-50</option>
+        </optgroup>
+        <optgroup label="良">
+        	<option value="50">50-60</option>
+            <option value="60">60-70</option>
+        </optgroup>
+        <optgroup label="差">
+        	<option value="70">70-80</option>
+            <option value="80">80-90</option>
+        </optgroup>
+    </select>
+    <div>符合该空气质量指标的城市有：<span></span></div>
+    <div id="title"></div>
+    
+    <script>
+	window.onload=function(){
+		var getOption=document.getElementsByTagName("select")[0];
+		var optionNums=document.getElementsByTagName("option"),optionNum;
+		
+		//以下，解决事件的兼容性问题；
+		if(getOption.attachEvent){
+		getOption.attachEvent("onpropertychange",function(){
+			optionNum=getOption.selectedIndex;
+		},false);
+		}
+		if(getOption.addEventListener){
+		getOption.addEventListener("change",optionRequest,false);
+		}
+		
+		//以下，与json文件的请求和响应；
+        function optionRequest(){
+			//以下，解析json文件，并获取得到的json数据；
+			if(window.XMLHttpRequest){
+				var xml=new XMLHttpRequest;
+			}else{
+				var xml=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xml.onreadystatechange=function(){
+				if(xml.readyState==4&&xml.status==200){
+					var xmldom=JSON.parse(xml.responseText);
+					//以下，根据下拉选项的值，指定返回给用户看到的内容；
+					jsonDo(xmldom);
+				}
+			}
+	
+			xml.open("GET","citylist.json",true);
+			xml.send();	
+		}
+		
+		//以下，根据下拉选项的值，指定返回给用户看到的内容；
+		function jsonDo(xmldom){
+			//以下，创建空数组；		
+			var cityBox=new Array;
+			//var cityList=new Array;
+			var cityNum=new Array;
+			optionNum=getOption.selectedIndex;
+			var cityLen=xmldom.city.length
+			if(optionNum==0){//显示全部数值
+				for(var i=0;i<cityLen;i++){
+					cityBox.push(xmldom.city[i]);
+					cityNum.push(xmldom.city[i].num);
+				}
+			}else{//显示部分数值
+				var clickNum=parseInt(optionNums[optionNum].value);
+				for(var i=0;i<cityLen;i++){
+					if(xmldom.city[i].num>clickNum&&xmldom.city[i].num<clickNum+10){
+						cityBox.push(xmldom.city[i]);
+						cityNum.push(xmldom.city[i].num);
+					}
+					
+				}
+			}
+			addHtml(cityBox);
+			//将得到的值显示于页面上；
+			function addHtml(cityBox){
+				var title=document.getElementById('title');
+				var txt="<table border='1' style='text-align:center;'><tr><th>序号</th><th>城市</th><th>空气值</th></tr>"
+				txt=txt+"<tr>";
+				for(i=0;i<cityBox.length;i++){
+				 var listNum=i+1;
+				 txt+="<tr><td>"+listNum+"</td><td>"+cityBox[i].name+"</td><td>"+cityBox[i].num+"</td></tr>";
+				}
+				txt=txt+"</tr></table>";
+				title.innerHTML="<br>"+txt+"<br><button id='citySort'>将结果排序按“空气值”排序</button>";
+					
+			}
+			
+			//在下拉选项的结果页面，添加点击事件；（结果排序）
+			return function(){
+				document.getElementById("citySort").addEventListener("click",citySort,false);
+				function citySort(){
+					cityNum.sort();//改进写法为：cityBox.sort(function(a,b){return a['num']-b['num'];})，这样后面的for循环就可以被取代了。
+					for(var i=0;i<cityBox.length;i++){
+					   for(var j=0;j<cityNum.length;j++){
+						   if(cityBox[j].num==cityNum[i]){
+							   cityNum[i]=cityBox[j];
+						    }
+					    } 
+					}
+					cityBox=cityNum;
+					cityNum=null;
+					addHtml(cityBox);
+				};
+			
+			}();//匿名函数自调用
+		
+		}	
+		
+		
+	}
+
+    </script>
+    
+</body>
+</html>

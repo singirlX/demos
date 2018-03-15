@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>数据录入，生成统计图</title>
+<style>
+body{
+	font-family:"微软雅黑";
+	width:800px;
+	margin:20px auto 0 auto;
+	border:1px #CCC solid;
+	height:500px;
+}
+form,#spanBox{
+	display:block;
+	width:640px;
+	margin:10px auto;
+}
+#spanBox{
+	height:300px;
+	margin-top:50px;
+}
+#maxin{
+	font-size:9px;
+	margin-left:5px;
+}
+#spanBox span{
+    display:block;
+	float:left;
+	text-align:center;
+	margin:0 10px;padding:0;
+	width:20px;
+	font-size:9px;
+}
+input{
+	width:250px;
+	height:30px;
+	margin:0 10px 5px 0;
+	padding-left:5px;
+	color:rgb(204,204,204);
+}
+button{
+	float:right;
+	margin:5px 5px 10px 0;
+	width:80px;height:30px;
+	background-color:rgb(255,204,102);
+	border:none;
+	color:rgb(51,51,51);
+	font-family:"微软雅黑";
+	font-size:14px;
+	font-weight:500;
+}
+
+</style>
+</head>
+
+<body>
+<form>
+<input type="text" id="putBox" value="输入0~60之间的数字"/>
+<button value="r_out">右出</button><button value="l_out">左出</button>
+<button value="r_in">右入</button><button value="l_in">左入</button>
+
+<br />
+</form>
+<div id="spanBox"></div>
+
+
+<script>
+window.onload=function(){
+	var btns=document.getElementsByTagName("button");
+	var putBox=document.getElementById("putBox");
+	var spanBox=document.getElementById("spanBox");
+	var setNum=new Array();
+/***************************************************************************************************************/
+//输入框的获取焦点事件；
+	putBox.addEventListener("focus",delVal,false);
+	putBox.addEventListener("blur",delVal,false);
+	putBox.addEventListener("input",srhCss,false);//input事件：在元素获取用户输入时触发；
+	var putVal=putBox.value,
+		putCol=putBox.style.color;//这2个变量保存input最原始的style状态，不能在delVal函数中定义，所以要在函数外面定义；
+	function delVal(){
+		switch(event.type){
+			case "focus":
+				putBox.value="";
+				putBox.style.color="rgb(102,102,102)"
+				break;
+			case "blur":
+			    if(putBox.value=="")//不加if限制，会覆盖后面输入的数字；
+				{
+					putBox.value=putVal;
+				}
+				putBox.style.color=putCol;
+				break;
+		};
+		
+	}
+/***************************************************************************************************************/
+//匹配突出显示；
+	function srhCss(){//突出显示符合匹配的元素；
+	console.log(setNum);
+		for(var i=0;i<setNum.length;i++){
+			console.log(setNum[i].value);
+			var srh=setNum[i].search(parseInt(this.value)+"+");
+				spanBox.childNodes[i].style.opacity=0.3;
+			console.log("i"+i+setNum[i]+"="+parseInt(this.value)+"="+srh);
+			if(srh>=0){
+				spanBox.childNodes[i].style.opacity=1;
+			}
+		}
+	}
+/***************************************************************************************************************/
+
+
+/****************************************************************************************************************/
+//按钮的点击事件；
+	for(var i=0;i<btns.length;i++){//给按钮添加事件；
+		btns[i].addEventListener("click",addTxt,false);//点击事件；
+	    btns[i].addEventListener("blur",delVal,false);//当按钮失去焦点时，输入框恢复提示内容；
+	}
+	function addTxt(){//按钮的点击事件对应的事件函数；
+
+		event.preventDefault();//此处取消button标签的默认行为，十分重要，否则无法使程序达到想要的效果；
+							   //button等表单标签，还有a标签等都很容易有默认行为，所以如果在为这些标签添加事件程序是需要十分小心，最好取消其默认行为，避免其影响事件程序效果；
+		
+		
+		var putValue=putBox.value,
+			btn=this.value;
+		var spanCss=document.getElementById("spanBox").childNodes;
+		if((isNaN(parseInt(putBox.value))||putBox.value<0||putBox.value>60)&&(btn=="l_in"||btn=="r_in")){//设置输入数字限制；
+																   //注意。匹配NaN需要使用isNaN()方法，而不是使用==或===操作符；
+																   //此操作必须放在取消时间默认程序后面，否则，执行此操作后会清空之前的操作；
+			alert("请输入0~60以内的合法数字")
+		}else if(setNum.length>=20){//当数量>=20时，弹出数据溢出提示。加=号是因为，判断结束后，若<20，则会加入一个新元素进数组里。=20时，第21条数据会进入并执行，需阻止；
+			alert("最多只能键入20条数据")
+		}else{
+			switch(btn){//判断数据的录入方式；根据录入方式不同给响应操作函数传递不同的参数；
+				case "l_in":
+					setNum.unshift(putValue);
+					setSpanCss(0,putValue);
+					break;
+				case "r_in":
+					setNum.push(putValue);
+					setSpanCss(spanCss.length,putValue);//此处为spanCss.length原因是，push操作发生在获取spanCss的行为之后，所以此处spanCss.length无需-1；
+					break;
+				case "l_out":
+					setNum.shift(putValue);
+					try{//使用try catch语句块是为了防止在没有键入元素的情况下，用户点击了，删除按钮，此时将忽略错误；
+						spanBox.removeChild(spanBox.childNodes[0])
+					}catch(ex){};				
+					break;
+				case "r_out":
+					setNum.pop(putValue);
+					try{
+						spanBox.removeChild(spanBox.childNodes[spanBox.childNodes.length-1]);
+					}catch(ex){};
+					break;
+			}
+		  }
+		
+		  function setSpanCss(spanNum,putValue){
+			  var putHig=Math.ceil(putValue*5);
+			  var newSpan=document.createElement("span");
+			  newSpan.innerHTML=setNum[spanNum];
+			  spanBox.insertBefore(newSpan,spanBox.childNodes[spanNum]);//左进即在【0】前面添加，右进即在【length】前面添加，但【length】其实是‘undefined’
+																		//但‘undefined’不会抛出错误，所以添加照常进行，添加在了数组尾部；
+			  //设置背景颜色；
+			  var spanSty=spanCss[spanNum].style;
+			  spanSty.backgroundColor="rgb("+Math.ceil(Math.random()*255)+","+Math.ceil(Math.random()*255)+","+Math.ceil(Math.random()*255)+")";
+			  //设置元素高度；
+			  var spans=spanBox.childNodes;
+			  for(var i=0;i<setNum.length;i++){
+				  spans[i].style.opacity=1;//恢复前面字符匹配中设置的透明度为1；
+				  spans[i].style.width=Math.ceil(600/(setNum.length*2))+"px";
+				  //alert(spans[i].style.width)
+				  spans[i].style.height=Math.ceil((parseInt(spans[i].innerHTML)*100/parseInt(spans[i].style.width)))+"px";
+				  spans[i].style.marginTop=400-parseInt(spans[i].style.height)+"px";
+				  spans[i].style.lineHeight=parseInt(spans[i].style.height)*2+20+"px";
+				  spans[i].style.marginLeft=Math.ceil(parseInt(spans[i].style.width)/2)+"px";
+				  spans[i].style.marginRight=spans[i].style.marginLeft;
+			  }
+				  spans[spanNum].style.height="0px";
+				  var i=0,j=0,tagNum=spans[spanNum].innerHTML,
+					  tagHig=Math.ceil((parseInt(spans[spanNum].innerHTML)*100/parseInt(spans[spanNum].style.width)));
+				  spans[spanNum].innerHTML="";
+				  var timer=setInterval(function(){
+					  j++/50;
+					  i+=j;
+					  if(Math.ceil(i)>tagHig){
+						  i=tagHig;//防止前面累加加多了；
+						  spans[spanNum].innerHTML=tagNum;
+						  clearInterval(timer);//此处必须使用clearInterval结束掉计时器，单纯使用return false 并不会完全结束计时器，这会在删除元素时，导致页面报错；
+					  }
+					  spans[spanNum].style.height=i+"px";
+					  spans[spanNum].style.marginTop=400-i+"px";
+				  },30)
+			  //以下，style.ceeText批量添加css属性的方法；
+			  //spanCss[0].style.cssText+="background-color:red;height:"+putHig+"px;"+"margin-top:"+(180-putHig)+"px;";
+			  //注意，此方法虽然批量，很方便，但是没有style性能高。而且使用的时候会覆盖原有属性，所以需要用+=来防止原有属性被覆盖；同时IE对该属性的解析较为混乱，谨慎使用；
+			  
+			  putBox.value="";//在输入数据进入队列后，将input框恢复为无内容状态；
+		  }
+			
+		
+/**************************************************************************************************************************************************/
+		
+	}
+}
+
+</script>
+</body>
+</html>

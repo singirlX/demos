@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>折叠面板</title>
+<style>
+body{
+	font-family:"微软雅黑";
+}
+
+.for_click{
+	display:none;
+}
+
+.box_title{
+	display:block;
+	width:600px;
+	height:60px;
+	line-height:60px;
+	box-sizing:border-box;
+	border:1px solid rgba(0,102,51,1);
+	border-radius:0 15px 0 0;
+	padding-left:10px;
+	background-color:rgba(0,102,51,0.7);
+	color:rgba(255,255,255,0.95);
+	transition:background-color 1s;
+}
+.box_txt{
+	width:600px;
+	border:1px solid rgba(0,102,51,1);
+	border-radius:0 15px 0 0;
+	text-indent:2em;
+	margin-bottom:5px;
+	height:60px;
+	overflow:hidden;
+	transition:height 1s;
+}
+.txt{
+	display:block;
+	padding:10px;
+	font-size:14px;
+}
+/******************************************/
+.box_title:hover{
+	color:rgba(255,255,255,1);
+	background-color:rgba(0,102,51,0.85)
+}
+.for_click:checked+.box_txt{
+	padding-bottom:30px;
+	height:200px;
+}
+
+
+</style>
+</head>
+
+<body>
+    <input class="for_click" id="one" type="checkbox"/><!--此处必须为checkbox，它有2种选中状态，而radio只能被选中，无法取消选中-->
+    <div class="box_txt">
+        <label class="box_title" for="one">北京</label>
+        <span class="txt">
+        北京，简称“京”，是中华人民共和国的首都、直辖市、国家中心城市、超大城市、国际大都市，全国政治中心、文化中心、国际交往中心、科技创新中心，是中国	共产党中央委员会、中华人民共和国中央人民政府、全国人民代表大会、中国人民政治协商会议全国委员会、中华人民共和国中央军事委员会所在地，是中部战区司令部驻地。
+        </span>
+    </div>
+    <input class="for_click" id="two" type="checkbox"/>
+    <div class="box_txt">
+        <label class="box_title" for="two">上海</label>
+        <span class="txt">
+            春秋战国时期，上海是楚国春申君黄歇的封邑，故别称申。四、五世纪晋朝时期，因渔民创造捕鱼工具“扈”，江流入海处称“渎”，因此松江下游一带称为“扈渎”，以后又改“沪”，故上海简称沪。[4-5]  唐朝置华亭县。上海是国家历史文化名城，拥有深厚的近代城市文化底蕴和众多历史古迹。江浙吴越文化与西方传入的工业文化相融合形成上海特有的海派文化。[6-7]  1843年后上海成为对外开放的商埠并迅速发展成为远东第一大城市。
+        </span>
+    </div>
+    <input class="for_click" id="three" type="checkbox"/>
+    <div class="box_txt">
+        <label class="box_title" for="three">香港</label>
+        <span class="txt">
+            香港自古以来就是中国的领土。1842-1997年间，香港曾为英国殖民地。二战以后，香港经济和社会迅速发展，不仅被誉为“亚洲四小龙”之一，更成为全球最富裕、经济最发达和生活水准最高的地区之一。1997年7月1日，中华人民共和国正式恢复对香港行使主权，香港特别行政区成立。中央拥有对香港的全面管治权，香港保持原有的资本主义制度和生活方式，并可享受外交及国防以外所有事务的高度自治权。“一国两制”、“港人治港”、高度自治是中国政府的基本国策。
+        </span>
+    </div>
+</body>
+</html>

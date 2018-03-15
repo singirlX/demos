@@ -1,0 +1,468 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	font-family:"微软雅黑";
+	margin:0;padding:0;
+	background-color:rgba(255,241,31,0.75);
+	overflow:hidden;
+	/*height在JS文件中设置*/
+}
+#box{
+	margin:0 100px;
+	border:5px dashed rgba(51,51,51,0.4);
+	border-width:0 5px;
+	height:100%;
+	padding-top:50px;
+}
+/*******************************************************以下·收起展开*/
+#pack_icon{
+	width:20px;
+	height:20px;
+	display:block;
+	background-image:url(../img/small_icon.png);
+	background-size:20px 200px;
+	background-position:0 40px;
+	cursor:pointer;
+	position:absolute;
+	top:20px;right:70px;
+	z-index:2;
+	opacity:0.7
+}
+#pack_icon:hover{
+	opacity:1;
+}
+#for_pack{
+	display:none;
+}
+#for_pack:checked~#sing_list_box #pack_icon{
+	background-position:0 20px;
+}
+#for_pack:checked~#sing_list_box #hide_scroll{
+	width:0;
+	transition:all 2s;
+}
+#for_pack:checked~#box #sing_img_box{
+	width:100%;
+	transition:all 2s;
+}
+#for_pack:not(:checked)~#sing_list_box #hide_scroll{
+	width:450px;
+	transition:all 2s;
+}
+#for_pack:not(:checked)~#box #sing_img_box{
+	width:500px;
+	transition:all 2s;
+}
+/*******************************************************以下·专辑信息*/
+#sing_img_box{
+	width:500px;
+}
+#img_border{
+	width:250px;
+	height:250px;
+	box-sizing:border-box;
+	border-radius:50px;
+	border:15px solid white;
+	padding:40px;
+	background-image:url(../img/bg.jpg);
+	background-size:contain;
+	margin:0 auto;
+	position:relative;
+	z-index:-2;	
+	overflow:hidden;
+}
+#sing_name{
+	padding:10px;
+	width:200px;
+	height:auto;
+	box-sizing:border-box;
+	border-radius:40px;
+	font-size:14px;
+	text-align:center;line-height:25px;
+	background-color:rgba(255,255,255,0.2);
+	border:2px solid rgba(51,51,51,0.4);
+	margin:30px auto 0 auto;
+	position:relative;
+	z-index:-1;
+}
+#sing_info{
+	padding-top:10px;
+	width:200px;
+	height:50px;
+	box-sizing:border-box;
+	margin:0 auto;
+	position:relative;
+	z-index:-1;
+}
+#sing_info span{
+	font-size:12px;
+	line-height:20px;
+	text-align:center;
+	display:block;
+	width:100%;
+}
+.radiu_trans{
+	width:200px;height:200px;
+	border-radius:200px;
+	position:absolute;bottom:0;left:0;
+	background-size:cover;
+	animation:img_rotate 20s linear infinite;
+}
+.for_radius{
+	width:210px;height:800px;
+	position:absolute;bottom:10px;left:10px;
+}
+@keyframes img_rotate{
+	from{transform:rotate(0deg);}
+	to{transform:rotate(360deg);}
+}
+@keyframes img_move{
+	0%{transform:rotate(0deg);}
+	100%{transform:rotate(90deg);}
+}
+@keyframes img_move_aft{
+	0%{transform:rotate(-90deg);}
+	100%{transform:rotate(0deg);}
+}
+@keyframes img_bef{
+	0%{transform:rotate(0deg);}
+	100%{transform:rotate(-90deg);}
+}
+@keyframes img_bef_aft{
+	0%{transform:rotate(90deg);}
+	100%{transform:rotate(0deg);}
+}
+/*******************************************************以下·播放列表*/
+#sing_list_box{
+	font-size:14px;
+	height:350px;
+	border-radius:5px 0 0 5px;
+	background-color:rgba(153,108,51,0.45);
+	position:absolute;top:50px;right:0;
+	padding:0;
+}
+#list_right{
+	background-color:rgba(153,108,51,0.45);
+	width:100px;
+	height:350px;
+	border-radius:5px 0 0 5px;
+	position:absolute;top:0;right:0;
+}
+#mp3_list{
+	width:450px;
+	height:300px;
+	padding:0 50px 0 10px;
+	list-style:none;
+	overflow-y:scroll;
+}
+#hide_scroll{
+	width:450px;
+	height:350px;
+	overflow:hidden;
+	position:relative;
+	margin-top:20px;
+	margin-right:100px;
+}
+#false_scroll{
+	width:15px;
+	height:320px;
+	border-radius:5px;
+	background-color:rgba(153,108,51,0.45);
+	position:absolute;	
+	top:0;right:0;
+	padding:0;
+	box-shadow:0 1px 5px 2px rgba(255,255,255,0.2) inset;
+	margin-right:20px;
+
+}
+#scroll_slip{
+	width:8px;
+	height:50px;
+	border-radius:5px;
+	background-color:rgba(255,255,255,0.4);
+	margin:0 auto;
+}
+#mp3_list input{
+	display:none;
+}
+.m_input:checked+.m_item{
+	background-color:rgba(153,108,51,0.25);
+	transition:all 1s;
+}
+#mp3_list label{
+	display:block;
+	box-sizing:border-box;
+	height:45px;line-height:45px;
+	padding-left:15px;
+	width:405px;
+	border:2px solid rgba(255,255,255,0.3);
+	border-width:0 0 2px 0;
+	color:white;
+	cursor:pointer;
+}
+#mp3_list label:hover{
+	background-color:rgba(153,108,51,0.45);
+	transition:all 1s;
+}
+/*******************************************************以下·播放控件*/
+#play_box{
+	width:100%;
+	height:100px;
+	background-color:rgba(255,255,255,0.9);
+	position:fixed;
+	bottom:0;
+	z-index:2;
+}
+#bef_icon,#aft_icon{
+	width:50px;
+	height:50px;
+	background-image:url(../img/play_list.png);
+	background-position:0 50px;
+	background-size:100px 100px;
+	position:absolute;
+	bottom:0;left:0;
+}
+#aft_icon{
+	background-position:50px 50px;
+	left:145px;/*包括icon之间的间距*/
+}
+#play_icon{
+	width:75px;
+	height:75px;
+	background-image:url(../img/play_list.png);
+	background-position:0 0;
+	background-size:150px 150px;
+	position:absolute;
+	bottom:0;left:60px;
+}
+#start_box{
+	position:absolute;
+	left:50px;;bottom:10px;
+}
+#start_box input{
+	visibility:hidden;
+}
+#start_box label{
+	border-radius:50px;
+	opacity:0.8;
+	cursor:pointer;
+}
+#start_box label:hover{
+	border-radius:50px;
+	opacity:1;
+	box-shadow:1px 1px 15px 0 rgba(51,51,51,0.4);
+	transition:all 0.5s;
+}
+#play_btn:checked+#play_icon{
+	background-position:75px 0;
+}
+/*******************************************************以下·播放进度条*/
+#mp3_time{
+	width:800px;
+	height:20px;
+	position:relative;
+	margin:50px 0 0 280px;
+}
+#time_circle{
+	width:16px;
+	height:16px;
+	margin:2px 0;
+	background-image:url(../img/circle.png);
+	background-size:contain;
+	cursor:pointer;
+	position:absolute;top:0;left:0;
+	z-index:0;
+}
+#time_length{
+	width:700px;
+	height:4px;
+	background-color:rgba(204,204,204,0.3);
+	margin:8px auto;
+	position:absolute;top:0;left:0;
+	z-index:-1;
+}
+#time_len_after{
+	height:4px;
+	background-color:rgba(204,204,204,0.3);
+	margin:8px auto;
+	position:absolute;top:0;left:0;
+	z-index:-1;
+	background-color:transparent;
+}
+
+#time_num{
+	float:right;
+	font-size:9px;
+}
+/*******************************************************以下·小图标*/
+#smicon_box{
+	position:absolute;
+	height:20px;width:120px;
+	margin:0;padding:0;
+	left:1100px;bottom:30px;
+}
+#smicon_box input{
+	display:none;
+}
+#smicon_box label{
+	display:block;margin-right:10px;
+	width:20px;
+	height:20px;
+	float:left;
+}
+/*************************************以下·控制声音*/
+#voice_icon,#dir_icon,#del_icon,#add_icon{
+	background-image:url(../img/small_icon.png);
+	background-size:20px 200px;
+	cursor:pointer;
+	opacity:0.6;
+}
+#voice_icon:hover,#dir_icon:hover,#del_icon:hover,#add_icon:hover{
+	opacity:1;
+}
+
+#voice_icon{
+	background-position:0 140px;
+	margin:0 auto;
+}
+#voice_btn:checked+#voice_icon{
+	background-position:0 120px;
+}
+
+/*************************************以下·声音进度条*/
+#change_voice{
+	height:130px;
+	margin-top:-30px;
+	margin-left:-10px;
+	width:20px;
+	position:relative;
+	visibility:hidden;
+}
+#len_box{
+	height:115px;
+	width:40px;text-align:center;
+	background-color:rgba(153,108,51,0.45);
+	box-shadow:0 -5px 0 5px rgba(153,108,51,0.45);
+}
+#voice_len{
+	height:100px;
+	width:4px;
+	background-color:rgba(51,51,51,0.45);
+	position:absolute;top:0;left:18px;
+}
+#voice_cir{
+	width:14px;
+	height:14px;
+	background-color:rgba(255,241,31,0.5);
+	background-size:contain;
+	position:absolute;top:0;left:13px;
+	z-index:1;
+	cursor:pointer;
+}
+#voice_box:hover #change_voice{
+	visibility:visible;
+}
+#voice_len_after{
+	width:4px;
+	background-color:rgba(204,204,204,0.3);
+	position:absolute;bottom:0;left:0;
+	height:100px;
+	background-color:yellow;
+}
+/*************************************以下·控制播放顺序*/
+#dir_icon{
+	background-position:0 160px;
+	position:absolute;
+	bottom:0;margin-bottom:1px;
+
+}
+#del_icon{
+	background-position:0 100px;
+}
+#add_icon{
+	background-image:url(../img/add.png);
+	background-size:contain;
+}
+#choose_dir,#voice_box{
+	float:left;margin-right:10px;
+	margin-top:-100px;padding:0;
+	width:20px;height:120px;
+}
+#mp3_loop{
+	height:70px;
+	background-color:rgba(153,108,51,0.45);
+	outline:15px solid rgba(153,108,51,0.45);
+	visibility:hidden;
+	list-style:none;
+	margin:0;padding:0;
+}
+#dir_icon{
+	visibility:visible;
+}
+#choose_dir:hover #mp3_loop{
+	visibility:visible;
+	transition:all 1s;
+}
+.loop_item{
+	display:block;
+	width:20px;
+	height:20px;
+	background-image:url(../img/small_icon.png);
+	background-size:20px 200px;
+	margin-bottom:5px;
+	cursor:pointer;
+	opacity:0.85;
+}
+.loop_item:hover{
+	opacity:1;
+}
+.loop_item:nth-of-type(1){
+	background-position:0 200px;
+}
+.loop_item:nth-of-type(2){
+	background-position:0 160px;
+}
+.loop_item:nth-of-type(3){
+	background-position:0 180px;
+}
+input{
+	display:block;
+	visibility:visible;
+}
+#dir_btn_01:checked~#dir_icon{
+	background-position:0 200px;
+}
+#dir_btn_02:checked~#dir_icon{
+	background-position:0 160px;
+}
+#dir_btn_03:checked~#dir_icon{
+	background-position:0 180px;
+}
+/*******************************************************以下·audio标签*/
+#musics{
+	visibility:hidden;
+}
+
+/***************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

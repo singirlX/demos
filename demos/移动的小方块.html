@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>移动的小方块</title>
+<style>
+body{
+	margin:0;padding:0;
+	font-family:"微软雅黑";
+
+}
+#gird_box{
+	border-collapse:collapse;
+	border:1px solid #ccc;
+}
+.one_gird{
+	float:left;
+	width:45px;
+	height:45px;
+	border:1px solid #ccc;
+	text-align:center;line-height:45px;
+	color:#999;
+	margin:0;padding:0;
+}
+#box{
+	display:inline-block;
+	width:550px;
+	position:relative;
+}
+#move_box{
+	background-color:rgba(216,71,65,0.4);
+	position:absolute;
+	width:47px;
+	height:47px;
+	top:48px;left:48px;
+	z-index:-1;
+	transform:rotate(0deg);
+}
+#m_target{
+	height:30%;
+	background-color:rgba(216,71,65,1);
+}
+
+#btn_info{
+	line-height:50px;
+	width:500px;
+	padding:50px 0 50px 0;
+	float:right;
+	margin-right:220px;
+	margin-top:200px;
+	border:2px solid rgba(216,71,65,0.8);
+}
+button{
+	width:80px;
+	height:35px;
+	background-color:rgba(216,71,65,0.8);color:white;
+	border:2px solid rgba(216,71,65,1);border-radius:5px;
+}
+#tra_box span,#mov_box span{
+	display:inline-block;width:100px;
+	text-align:right;
+	font-family:"微软雅黑";
+	font-size:14px;
+	color:#666;
+}
+#box{
+	margin:0;padding:0;
+}
+</style>
+</head>
+
+<body>
+	<div id="box">
+        <table id="gird_box"></table>
+        <div id="move_box">
+            <div id="m_target"></div>
+        </div>
+    </div>
+    <div id="btn_info">
+        <div id="tra_box">
+            <span>移动：</span>
+            <button class="tra">TOP</button>
+            <button class="tra">RIGHT</button>
+            <button class="tra">BOTTOM</button>
+            <button class="tra">LEFT</button>
+        </div>
+        <div id="mov_box">
+            <span>旋转并移动：</span>
+            <button class="mov">TOP</button>
+            <button class="mov">RIGHT</button>
+            <button class="mov">BOTTOM</button>
+            <button class="mov">LEFT</button>
+        </div>
+    </div>   
+<script>
+window.onload=function(){
+	var gird_box=document.getElementById("gird_box"),
+		gird_arr=document.getElementsByClassName("one_gird"),
+		line_arr=document.getElementsByClassName("one_line"),
+		move_box=document.getElementById("move_box"),//以上，创建表格和运动体；
+		tra_arr=document.getElementsByClassName("tra"),
+		mov_arr=document.getElementsByClassName("mov"),
+		f_top=move_box.offsetTop,
+		f_left=move_box.offsetLeft;
+/************************************************************************************/
+	for(var i=0;i<11;i++){//创建表格；
+		var one_line=document.createElement("tr");
+		one_line.setAttribute("class","one_line");
+		gird_box.appendChild(one_line);
+		for(var j=0;j<11;j++){
+			var one_gird=document.createElement("td");
+			one_gird.setAttribute("class","one_gird");
+			one_line.appendChild(one_gird);
+		}
+	}
+	for(var i=1;i<11;i++){//写入行列序号
+		gird_arr[i].innerHTML=i;
+		line_arr[i].firstElementChild.innerHTML=i;
+	}
+/************************************************************************************/
+	for(var i=0;i<tra_arr.length;i++){//添加tra点击事件；
+		(function(i){
+			tra_arr[i].onclick=function(){
+				traPara(i);
+			}
+		})(i);
+	}
+	var move_len=gird_arr[0].offsetWidth,//需放在创建表格之后才能获取得到；
+		top_min=move_box.offsetTop,
+		top_max=gird_box.offsetHeight-(move_box.offsetHeight+1),
+		left_min=move_box.offsetLeft,
+		left_max=gird_box.offsetWidth-(move_box.offsetWidth+1),
+		timer_1=null,
+		timer_2=null,
+		timer_3=null;
+/*************************************************************************************/		
+	var coor_arr=[];//用于存储多次点击的动作；
+	function traPara(num){//>>1根据点击按钮的不同，为操作函数传递不同的需求参数；
+		if((move_box.offsetTop<=top_min&&num==0)||(move_box.offsetTop>=top_max&&num==2)||
+		(move_box.offsetLeft<=left_min&&num==3)||(move_box.offsetLeft>=left_max&&num==1)){
+			coor_arr=[];//单一/连续动作执行至边界时，清空数组；减小数组剩下元素对页面的干扰；
+			return false;
+		}//防止出边界；
+		switch(num){//传递单元坐标；
+			case 0:
+				coor_arr.push([0,-1]);//此处将push需要执行的坐标，与后期将执行完的坐标unshift，最后每一次都调用coor_arr[0]；
+				break;
+			case 1:
+				coor_arr.push([1,0]);
+				break;
+			case 2:
+				coor_arr.push([0,1]);
+				break;
+			case 3:
+				coor_arr.push([-1,0]);
+				break;
+		}
+		traCheck(num,{x:coor_arr[0][0],y:coor_arr[0][1],x_all:0,y_all:0},move_len);
+		//执行traCheck函数；此处的第2个参数除了用对象方法传递还可以用数组方法传递，原理同；
+	}
+	
+	function traCheck(num,speed,len){//>>2,检查move_box是否正在运动；防止多次点击btn出现运动叠加；
+		clearInterval(timer_1)	
+		if((((move_box.offsetTop-f_top)%len)==0)&&(((move_box.offsetLeft-f_left)%len)==0)){
+			clearInterval(timer_1)	;console.log(123);
+			traMove(num,speed,len);
+		}else{
+		}
+		timer_1=setInterval(function(){traCheck(num,speed,len)},10);
+	}
+	
+	function traMove(num,speed,len){//>>3控制move_box的运动；
+		clearInterval(timer_1);
+		clearInterval(timer_2);
+		speed.x_all+=Math.abs(speed.x);
+		speed.y_all+=Math.abs(speed.y);
+		move_box.style.left=move_box.offsetLeft+speed.x+"px";
+		move_box.style.top=move_box.offsetTop+speed.y+"px";
+		if((Math.abs(speed.x)==1&&speed.x_all==len)||(Math.abs(speed.y)==1&&speed.y_all==len)){
+			if((move_box.offsetTop<=top_min&&num==0)||(move_box.offsetTop>=top_max&&num==2)||
+			(move_box.offsetLeft<=left_min&&num==3)||(move_box.offsetLeft>=left_max&&num==1)){
+				coor_arr=[];
+				return false;
+			}//防止出边界；
+			coor_arr.shift(coor_arr[0]);
+			if(coor_arr.length>0){
+				clearInterval(timer_1);
+				clearInterval(timer_2);
+				traCheck(num,{x:coor_arr[0][0],y:coor_arr[0][1],x_all:0,y_all:0},move_len);
+				return false;
+			}else{
+				clearInterval(timer_1);
+				clearInterval(timer_2);
+				return false;
+			}
+		}
+		timer_2=setInterval(function(){traMove(num,speed,len)},10);
+	}
+		
+	move_box.style.transform="rotate(0deg)";
+/******************************************************************************************************/
+
+	for(var i=0;i<mov_arr.length;i++){//添加move点击事件；
+		(function(i){
+			mov_arr[i].onclick=function(){
+				boxRotate(i,1,0,i*90,now_deg);
+				traPara(i);
+			}
+		})(i);
+	}
+	var now_deg=0;
+	function boxRotate(num,speed,speed_all,t_deg,f_deg){
+		clearInterval(timer_3);
+		if(now_deg==360&&num==1){
+			now_deg=0;
+		}if(now_deg==0&&num==3){
+			now_deg=360;
+		}
+		if(t_deg==0&&now_deg==270){
+			t_deg=360;
+		}
+		if(now_deg>t_deg){
+			now_deg-=speed;
+		}else{
+			now_deg+=speed;
+		}
+		move_box.style.transform="rotate("+now_deg+"deg)";
+		speed_all+=speed;
+		console.log(speed_all+"   "+(t_deg-f_deg))
+		if(Math.abs(speed_all)==Math.abs(t_deg-f_deg)||Math.abs(now_deg)==Math.abs(t_deg)){
+			clearInterval(timer_3);
+			return false;
+		}
+		timer_3=setInterval(function(){boxRotate(num,speed,speed_all,t_deg,f_deg);},5);
+	}
+/******************************************************************************************************/
+
+}
+</script>
+</body>
+</html>

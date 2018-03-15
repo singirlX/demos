@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>表格升降序</title>
+<style>
+td{
+	width:150px;height:35px;
+	text-align:center;
+	background-color:#CCC;
+}
+.f_tr td{
+	padding:0;
+	height:80px;
+	background-color:rgba(102,102,102,0.8);
+	color:white;
+	position:relative;
+}
+.span_1,.span_2{
+	width:40px;
+	height:35px;
+	display:block;
+	background-color:white;
+	border:3px solid #999;
+	position:absolute;
+	right:0;
+	line-height:25px;
+	font-size:9px;
+	cursor:pointer;
+}
+.span_1{
+	top:0;
+}
+.span_2{
+	top:45px;
+}
+</style>
+</head>
+<body>
+<div id="box">
+</div>
+<script>
+window.onload=function(){
+	//本组件已经实现表格的排序功能，
+	//且可以后续添加表格内容:47行添加“字段名”（注意：将总分放在最后一个，此处有待优化），48行添加“字段”；
+	var box=document.getElementById("box"),
+		d_head=["姓名","语文","数学","英语","总分"],
+		data=[["Z",73,90,70],["E",80,65,93],["K",72,61,55],["A",91,86,95]];
+	var ta_ble=document.createElement("table"),
+		t_body=document.createElement("tbody"),
+		f_tr=document.createElement("tr");
+	f_tr.setAttribute("class","f_tr");
+	for(var i=0;i<data.length;i++){//计算总分
+		data[i].push(data[i][1]+data[i][2]+data[i][3]);
+	}
+	for(var i=0;i<d_head.length;i++){//添加表头
+		var t_h=document.createElement("td"),
+			span_1=document.createElement("button"),
+			span_2=document.createElement("button");
+		t_h.innerHTML=d_head[i];
+		span_1.setAttribute("class","span_1");
+		span_2.setAttribute("class","span_2");
+		span_1.innerHTML="rise";
+		span_2.innerHTML="drop";
+		f_tr.appendChild(t_h).appendChild(span_1);
+		f_tr.appendChild(t_h).appendChild(span_2);
+	}
+	var f_add=box.appendChild(ta_ble).appendChild(t_body);
+	var s_add=f_add.appendChild(f_tr);
+	for(var i=0;i<data.length;i++){//添加data信息到表格
+		var t_r=document.createElement("tr");
+		for(var j=0;j<data[0].length;j++){//console.log(data[i][j])
+			var t_d=document.createElement("td");
+			t_d.innerHTML=data[i][j];
+			t_r.appendChild(t_d);
+		}
+		f_add.appendChild(t_r);
+	}
+	
+	//指定事件；
+	var rise_btn=document.getElementsByClassName("span_1"),
+		drop_btn=document.getElementsByClassName("span_2");
+	for(var i=0;i<rise_btn.length;i++){
+		rise_btn[i]._index=i;
+		rise_btn[i].onclick=function(){
+			reCss();
+			changeData(this._index,"r");
+		};
+		drop_btn[i]._index=i;
+		drop_btn[i].onclick=function(){
+			reCss();
+			changeData(this._index,"d");
+		};
+	}
+	//指定时间的动作函数；
+	var n_tr=document.getElementsByTagName("tr");
+	function changeData(num,r_d){
+		if(num>0){//对姓名（等非数字进行排序）；
+			data.sort(function(a,b){return a[num]-b[num]});	
+		}else{//对成绩的数字进行排序；
+			data.sort();
+		}
+		if(r_d=="d"){//将升序改为降序；使用reverse（）而非sort（），因为，2个sort（）在一起有一个会失效，原因不明；
+			data.reverse();
+		}
+		for(var i=1;i<n_tr.length;i++){//展示新的排序信息；
+			for(var j=0;j<data[0].length;j++){
+				n_tr[i].children[j].innerHTML=data[i-1][j];
+			}
+		}
+		n_tr[0].children[num].style.backgroundColor="#333";//设置排序字段的样式；
+	}
+	function reCss(){//恢复表格初始样式；
+		for(var i=0;i<n_tr[0].children.length;i++){
+			n_tr[0].children[i].style.backgroundColor="rgba(102,102,102,0.8)"
+		}
+	}
+	
+	
+}
+</script>
+</body>
+</html>

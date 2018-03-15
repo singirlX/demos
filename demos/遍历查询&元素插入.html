@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>遍历查询以及元素插入</title>
+<style>
+#flex_box{
+	display:flex;
+	border:none;
+}
+div{
+	border:3px solid red;
+	margin:10px;
+	background-color:white;
+	color:black;
+	padding:3px;
+}
+.root{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:flex-end;
+	border:5px solid blue;
+	flex-grow:2;
+	width:1000px;
+}
+.root>div{
+	display:flex;
+	justify-content:flex-end;
+	flex-grow:1;
+	border:3px solid yellow;
+}
+.root>div>div{
+	flex-grow:1;
+}
+
+#formEle{
+	flex-grow:1;
+	padding:10px;
+}
+select,option{
+	width:80px;
+	height:30px;
+	margin:10px;
+
+}
+input{
+	height:25px;width:200px;margin:10px;
+	color:#CCC;padding-left:5px;
+}
+button{
+	width:120px;
+	height:30px;
+	margin:5px 10px;
+}
+h5{
+	margin:20px auto;
+	padding-top:15px;
+	border-top:1px #CCC solid;
+	color:#666;
+	font-size:12px;
+}
+#addFirst{
+	width:140px;
+}
+#addSecond{
+	width:250px;
+}
+#addBtn{
+	width:60px;
+}
+#careful{
+	font-size:9px;
+	color:#999;
+}
+p{
+	font-size:9px;
+	line-height:18px;
+	color:#666;
+}
+</style>
+</head>
+
+<body>
+<div id="flex_box">
+    <div class="root">root
+        <div class="num">数字
+            <div class="numItem">12</div>
+            <div class="numItem">26</div>
+            <div class="numItem">35</div>
+        </div>
+        
+        <div class="en">英语
+            <div class="enItem">apple</div>
+            <div class="enItem">tom</div>
+            <div class="enItem">world</div>
+            <div class="enItem">name</div>
+        </div>
+        
+        <div class="cn">汉字
+            <div class="cnItem">你</div>
+            <div class="cnItem">我</div>
+            <div class="cnItem">他</div>
+            <div class="cnItem">她</div>
+            <div class="cnItem">它</div>
+        </div>
+    </div>
+    <div id="formEle">
+        <input id="searchBox" value="请输入查询内容"/><br />
+        <button value="rtk">查询（先根遍历）</button>
+        <button value="ktr">查询（后根遍历）</button>
+        
+        <form>
+            <br />
+            <h5>添加元素:</h5>
+            <span>一级标签</span>
+            <select>
+                <option>数字</option>
+                <option>英语</option>
+                <option>汉字</option>
+                <option>自定义</option>
+            </select>
+            <input id="addFirst" value="输入自定义一级标签" disabled="disabled"/>
+            <br /><span>二级标签</span>
+            <input id="addSecond" value="请输入添加内容"/>
+            <button id="addBtn">添加</button>
+            <br /><span id="careful">注：二级标签内容可以重复，一级标签内容不能重复</span>
+        </form>
+    </div>
+</div>
+<p>主要功能：
+<br />在有/无查询的情况下，先/后根遍历
+<br />添加元素到遍历元素块中（可选择一级/二级标签的添加）
+<br />添加元素时，二级标签内容可以重复，一级标签内容不能重复（含弹窗提醒）；
+<br />可以完善的：建立二级输入框的一次性添加多个二级内容；
+</p>
+<script>
+window.onload=function(){
+	var btns=document.getElementsByTagName("button"),
+		root=document.getElementsByClassName("root")[0],
+		divs=document.getElementsByTagName("div"),
+		divBox=[];
+	var srhBox=document.getElementById("searchBox");
+/*************************************************************/
+	var divss=[];//存储内容及对应元素的键值对；
+	divss[root.getAttribute("class")]=root;
+	for(var i=0;i<root.children.length;i++){
+		divss[root.children[i].childNodes[0].nodeValue.trim()]=root.children[i];
+		for(var j=0;j<root.children[i].children.length;j++){
+			divss[root.children[i].children[j].childNodes[0].nodeValue.trim()]=root.children[i].children[j];
+		}
+	}
+/*************************************************************/
+	for(var i=0;i<btns.length;i++){//添加遍历事件
+		btns[i].addEventListener("click",function(){
+			reCss();
+			running.call(this,this.value,root);
+			setCss(0,srhBox);
+		},false);
+	}
+	//添加input 框事件
+	var puts=document.getElementsByTagName("input"),
+		putBox=[],
+		putFVal=[];
+	for(var j=0;j<puts.length;j++){
+		putBox[j]=puts[j];
+		putFVal[j]=puts[j].value;
+		puts[j].addEventListener("focus",function(){
+			setTxt.call(this,putBox.indexOf(this));
+		},false);
+		puts[j].addEventListener("blur",function(){
+			setTxt.call(this,putBox.indexOf(this));
+		},false);
+	}
+	//添加元素事件
+	var addBtn=document.getElementById("addBtn");
+	addBtn.addEventListener("click",function(){
+		addKid();		
+	},false);
+	//添加select事件
+	var selectBox=document.getElementsByTagName("select")[0];
+	var addF=document.getElementById("addFirst");
+	selectBox.addEventListener("change",function(){//select事件响应操作，修改其右侧input的禁用状态；
+		if(selectBox.value=="自定义"){
+			addF.removeAttribute("disabled");
+		}else{
+			addF.value="输入自定义一级标签";
+			addF.style.color="#CCC";
+			addF.setAttribute("disabled","disabled");
+		}
+	},false);
+/*******************************************************************************************///遍历事件响应函数；    
+	function running(val,node){
+		if(node!==null){//先根遍历
+			if(val=="rtk"){
+				divBox.push(node);
+			}
+			if(node.children){
+				for(var j=0;j<node.children.length;j++){
+					running(val,node.children[j]);
+				}
+			}
+			if(val=="ktr"){//后根遍历
+				divBox.push(node);
+			}
+		}
+	}
+	
+	var timer=null;
+	function setCss(m,srhBox){
+		clearInterval(timer);
+		if(m<divBox.length){
+			switch(divBox[m].getAttribute("class")){
+				case "root":
+					divBox[m].style.backgroundColor="blue";
+					divBox[m].style.color="white";
+					break;
+				case "num":
+				case "en":
+				case "cn":
+				case "new_box"+newNum://用户新建的一级标签；
+					divBox[m].style.backgroundColor="yellow";
+					divBox[m].style.color="black";
+					break;
+
+				case "numItem":
+				case "enItem":
+				case "cnItem":
+				case "new_box"+newNum+"_item"://用户新建的二级内容；
+					divBox[m].style.backgroundColor="red";
+					divBox[m].style.color="white";
+					break;
+			}
+		//匹配查询输入文本，做查询响应动作	
+		if(srhBox.value.trim()==divBox[m].childNodes[0].nodeValue.trim()){//使用trim()，去除字符串两边的空白字符串，避免匹配失误；
+			divBox[m].style.backgroundColor="green";
+			divs[m].style.color="white";
+			alert("查找成功，结果为绿色部分。此次查找结束");
+			return false;
+		}
+			m++;
+			timer=setInterval(function(){setCss(m,srhBox)},100);
+		}
+	}
+	
+	function reCss(){
+		for(var n=0;n<divBox.length;n++){
+			divs[n].style.backgroundColor="white";
+			divs[n].style.color="black";
+		}
+		divBox=[];
+	}
+/*******************************************************************************************/ //input框事件响应函数；
+	function setTxt(num){
+		if(puts[num].value==putFVal[num]){//focus响应操作；
+			this.value="";
+			this.style.color="black";
+			return false;
+		}
+		if(puts[num].value!==putFVal[num]&&this.value==""){//blur响应操作；
+			this.value=putFVal[num];
+			this.style.color="#CCC";
+		}
+	}
+	
+/*******************************************************************************************/ //"添加元素"事件响应函数；
+	var newNum=0;
+	function addKid(){
+		event.preventDefault();
+		var selectVal=selectBox.value,
+			newKid=document.createElement("div"),
+			newBox=document.createElement("div"),
+			firVal=document.getElementById("addFirst").value,
+			secVal=document.getElementById("addSecond").value;
+		//判断一级、二级输入框的输入情况
+		if(((document.getElementById("addFirst").getAttribute("disabled")=="disabled")&&(secVal=="请输入添加内容"||secVal==""))
+		||((document.getElementById("addFirst").getAttribute("disabled")==null)&&(firVal=="输入自定义一级标签"||firVal==""))){//判断是否为空值时，null不能加引号;
+			alert("请输入完整内容，不能为空");
+			return false;
+		}
+		//添加输入框的用户输入内容；
+		newKid.innerHTML=secVal;
+		if(selectVal=="自定义"){//还需添加一级标签时：
+			for(var i=0;i<selectBox.children.length;i++){
+				if(selectBox.children[i].childNodes[0].nodeValue==firVal){
+					alert("已存在该标签");
+					return false;
+				}
+			}
+			newNum++;
+			newBox.setAttribute("class","new_box"+newNum);
+			newBox.innerHTML=firVal;
+			newKid.setAttribute("class","new_box"+newNum+"_item");
+			root.appendChild(newBox).appendChild(newKid);
+			//追加完DIV元素之后，需要将新的div元素添加到divss数组中；
+			divss[firVal]=newBox;
+			divss[secVal]=newKid;
+			//在select中添加新建的一级标签选项
+		    var newop=document.createElement("option");
+			newop.innerHTML=firVal;
+			selectBox.insertBefore(newop,selectBox.children[selectBox.children.length-1]);
+			selectVal=newKid.getAttribute("class");
+		}else{//只需添加二级内容时：
+			newKid.setAttribute("class",divss[selectVal].firstElementChild.getAttribute("class"));
+			divss[selectVal].appendChild(newKid);
+			//按理说if中追加了divss在else的情况中也需要追加，但是没追加暂时没有视觉上的影响，所以此处暂时不予追加；
+		}
+	}
+   
+}
+</script>
+
+</body>
+</html>

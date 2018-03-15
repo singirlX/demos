@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>自定义右菜单</title>
+<style>
+body{
+	margin:0;
+	padding:0;
+}
+h2{
+	margin:0;
+	float:left;
+	color:#666;
+	font-size:18px;
+}
+#rbtn_box{
+	margin:100px auto;
+	width:500px;
+	height:300px;
+	background-color:rgba(255,153,102,0.5);
+}
+/****************************************************/
+.menu_css{
+	width:150px;
+	box-sizing:border-box;
+	background-color:white;
+	border:1px solid rgba(0,153,255,1);
+	border-radius:5px;
+	box-shadow:2px 2px 10px rgba(255,255,255,0.2);
+	list-style:none;
+	padding:10px 0;margin:0;
+	position:absolute;
+	display:none;
+}
+.menu_css li{
+	width:100%;
+	height:40px;
+	box-sizing:border-box;
+	line-height:40px;
+	padding:0 10px;
+	border:10px solid white;/*利用border实现“父元素padding”的视觉效果，
+	优点是：不影响鼠标事件的流畅度，因为“父元素padding”不属于当前元素，所以不会支持当前元素的mouseover*/
+	border-width:0 10px;
+}
+.menu_css li span{
+	display:block;
+	float:right;
+	text-align:right;
+}
+.menu_css a{
+	text-decoration:none;
+	ion:none;
+	color:#333;
+	font-family:"微软雅黑";font-size:14px;
+}
+/**********************************************/
+.menu_css li:hover{
+	background-color:rgba(102,102,255,0.4);
+	color:white;
+}
+/*********************************************/
+
+</style>
+</head>
+
+<body>
+<h2>默认右键菜单区</h2>
+    <div id="rbtn_box">
+        <h2>自定义右键菜单区</h2>
+    </div>
+    <ul id="r_btn" class="menu_css">
+    	<a href="#"><li>复制</li></a>
+    	<a href="#"><li>粘贴</li></a>
+    	<a href="#"><li>全选</li></a>
+    	<a href="#"><li class="has_kid">保存到<span>></span></li></a>
+    	<a href="#"><li class="has_kid">添加到收藏夹<span>></span></li></a>
+    </ul>
+    <ul class="kid_ul menu_css">
+    	<a href="#"><li>C盘</li></a>
+    	<a href="#"><li>D盘</li></a>
+    	<a href="#"><li>虚拟云盘</li></a>
+    </ul>
+    <ul class="kid_ul menu_css">
+    	<a href="#"><li>音乐</li></a>
+    	<a href="#"><li>图片</li></a>
+    	<a href="#"><li>新闻资讯</li></a>
+    </ul>
+</body>
+
+<script>
+window.onload=function(){
+	var rbtn_box=document.getElementById("rbtn_box"),
+		r_btn=document.getElementById("r_btn"),
+		has_kid=document.getElementsByClassName("has_kid"),
+		kid_ul=document.getElementsByClassName("kid_ul");
+	rbtn_box.addEventListener("contextmenu",function(){
+			event.preventDefault();
+			r_btn.style.display="block";
+			if(event.clientY+r_btn.offsetHeight>window.innerHeight){
+				r_btn.style.top=event.clientY-r_btn.offsetHeight+"px";
+			}else{
+				r_btn.style.top=event.clientY+"px";
+			}
+			if(event.clientX+r_btn.offsetWidth>window.innerWidth){
+				r_btn.style.left=event.clientX-r_btn.offsetWidth+"px";
+			}else{
+				r_btn.style.left=event.clientX+"px";
+			}
+			//console.log(event.clientX,event.clientY,window.innerHeight,window.innerWidth,r_btn.offsetHeight,r_btn.offsetWidth)
+	},false);
+	document.getElementsByTagName("body")[0].addEventListener("click",function(){
+			r_btn.style.display="none";
+			for(var i=0;i<kid_ul.length;i++){
+				kid_ul[i].style.display="none"
+			}
+	},false);
+	for(var i=0;i<has_kid.length;i++){
+		(function(i){
+		has_kid[i].addEventListener("mouseover",function(){
+			kid_ul[i].style.display="block";
+			kid_ul[i].style.top=has_kid[i].offsetParent.offsetTop+has_kid[i].offsetTop+"px";
+			kid_ul[i].style.left=has_kid[i].offsetParent.offsetLeft+has_kid[i].offsetParent.offsetWidth-1+"px";//-1为了减掉2菜单间的间隙，使鼠标事件更流畅；
+		},false);
+		has_kid[i].addEventListener("mouseout",function(){
+			kid_ul[i].style.display="none";
+		},false);
+		kid_ul[i].addEventListener("mouseover",function(){
+			kid_ul[i].style.display="block";
+		},false);
+		kid_ul[i].addEventListener("mouseout",function(){
+			kid_ul[i].style.display="none";
+		},false);
+		})(i);
+	}
+
+}
+</script>
+</html>

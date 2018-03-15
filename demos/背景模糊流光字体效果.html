@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>背景模糊流光字体效果</title>
+<style>
+body{
+	text-align:center;
+	margin:0;padding:0;
+}
+/****************************************************/
+/*图片部分*/
+#autumn{
+	display:block;
+	max-width:100%;
+	height:auto;
+}
+#box:hover #autumn{
+	filter:blur(1px) drop-shadow(3px 3px 3px rgba(204,204,204,0.3)) brightness(0.95);
+}
+/****************************************************/
+/*渐变文字部分*/
+#img_txt{/*border:1px solid #9F0;*/
+	font-family:Georgia, "Times New Roman", Times, serif;text-align:center;
+	font-size:80px;
+	
+	width:100%;
+	height:100%;
+	box-sizing:border-box;/*使元素width和height不会被border和padding影响*/
+	line-height:2.5em;
+	position:absolute;
+	top:0;left:0;
+	
+	background:linear-gradient(90deg,#FF0 0%,#03F 25%,#FF0 50%,#03F 75%,#FF0 100%);/*设置背景渐变*/
+	-webkit-background-clip:text;/*设置背景的划分区域，此属性只支持-webkit-内核浏览器*/
+	-webkit-text-fill-color:transparent;/*将文字修改为透明，即将文字部分挖空，显示出渐变背景,此属性只支持-webkit-内核浏览器*/
+	background-size:200% 100%;
+	opacity:0;
+}
+#box:hover #img_txt{
+	animation:change_bg linear infinite 5s;
+	opacity:1;
+	transition:opacity 1s ease-in;
+}
+@keyframes change_bg{
+	0% 	 {background-position:0;}
+	100% {background-position:-100%;}
+}
+/***********************************************************/
+/*半透明文字背景部分*/
+#lines{
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;left:0;
+}
+#box:hover #lines{
+	background-color:rgba(255,255,255,0.2);
+	box-shadow:1px 1px 1px rgba(255,255,255,0.1);
+	transition:background-color 1s ease-in;
+}
+/************************************************************/
+/*延长线部分*/
+#box{
+	position:relative;
+	margin:50px;
+	width:600px;
+	height:400px;
+}
+#back_whi{
+	position:absolute;
+	top:25%;left:10%;
+	width:80%;
+	height:50%;
+	box-sizing:border-box;
+}
+#lines:before{
+	content:' ';
+	width:0;
+	height:100%;
+	box-sizing:border-box;
+	border-width:2px 0;
+	position:absolute;
+	top:0;
+	left:250px;
+	visibility:hidden;
+}
+#box:hover #lines:before{
+	content:' ';
+	width:100%;
+	height:100%;
+	box-sizing:border-box;
+	border:2px solid white;
+	border-width:2px 0;
+	position:absolute;
+	top:0;
+	left:0;
+	visibility:visible;
+	transition:all 1s ease-in;
+}
+#lines:after{
+	content:' ';
+	width:100%;
+	height:0;
+	box-sizing:border-box;
+	border-width:0 1px;
+	position:absolute;
+	top:25%;
+	left:0;
+	visibility:hidden;
+}
+#box:hover #lines:after{
+	content:' ';
+	width:100%;
+	height:100%;
+	box-sizing:border-box;
+	border:1px solid white;
+	border-width:0 1px;
+	position:absolute;
+	top:0;
+	left:0;
+	visibility:visible;
+	transition:all 1s ease-in;
+}
+/******************************************************/
+</style>
+</head>
+
+<body>
+<div id="box">
+    <img id="autumn" src="img/car.jpg" />
+    <p>鼠标移入，显示效果</p>
+    <div id="back_whi">
+        <div id="lines">
+            <span id="img_txt">TAXI</span>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

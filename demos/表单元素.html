@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>表单元素</title>
+<style>
+body{
+	margin:0;
+	padding:50px 0;
+	color:#333;
+	text-align:center;
+}
+h2{
+	font-family:"微软雅黑";
+	font-size:18px;
+	color:#666;
+}
+.circle{
+	display:none;
+}
+/***********************************/
+.circle_txt_1{
+	display:inline-block;
+	border-radius:35px;
+	width:50px;height:50px;
+	box-sizing:border-box;
+	border:3px solid #999;
+}
+#one:checked+.circle_txt_1{
+	display:inline-block;
+	border-radius:30px;
+	width:44px;height:44px;
+	box-sizing:border-box;
+	background-color:rgb(215,62,51);
+	border:10px solid white;
+	box-shadow:0 0 0 3px rgb(215,62,51);/*box-shadow不在元素宽度范围内，之后需设置margin，保证其位置不会出现偏移*/
+	margin:3px;
+}
+/***********************************/
+.circle_txt_2{
+	display:inline-block;
+	width:50px;height:50px;
+	box-sizing:border-box;
+	border:3px solid #999;
+	position:relative;
+}
+.circle_txt_2:before{
+	content:"✔";
+	text-align:center;
+	font-family:"黑体";
+	color:rgb(215,62,51);
+	width:50px;height:50px;
+	font-size:43px;
+	line-height:50px;
+	box-sizing:border-box;
+	display:inline-block;
+	width:50px;text-align:center;
+	opacity:0;
+	position:absolute;top:0;left:0;/*此处定位若不设置，会对该选择框的视觉位置产生一定的影响*/
+}
+#two:checked+.circle_txt_2:before{
+	opacity:1;
+}
+#two:checked+.circle_txt_2{
+	border:3px solid rgb(215,62,51);
+}
+/***************************************************/
+.new_radius,.new_checkbox{/*加div包围，使用zoom便捷修改尺寸（原始w50,H50）,同时引用也更加模块化；*/
+	width:56px;height:56px;
+	display:inline-block;
+	zoom:0.5;
+}
+/***************************************************/
+/*以下：雪碧图部分*/
+.img_txt_1{
+	display:inline-block;
+	width:25px;height:25px;
+	background-image:url(img/icon.png);
+	background-repeat:no-repeat;
+	background-size:50px 50px;
+	background-position:0 -25px;
+}
+#img_one:checked+.img_txt_1{
+	background-position:-25px -25px;
+}
+.img_txt_2{
+	display:inline-block;
+	width:25px;height:25px;
+	background-image:url(img/icon.png);
+	background-repeat:no-repeat;
+	background-size:50px 50px;
+}
+#img_two:checked+.img_txt_2{
+	background-position:-25px 0;
+}
+p{
+	color:#000;
+	font-size:10px;
+}
+</style>
+</head>
+
+<body>
+    <p>点击勾选</p>
+	<h2>CSS3·部分</h2>
+    <div class="new_radius">
+        <input class="circle" id="one" type="radio" />
+        <label class="circle_txt_1" for="one"></label><!--one不在label内，所以需要使用for来指向其表示的按钮-->
+    </div>
+    <div class="new_checkbox">
+        <input class="circle" id="two" type="checkbox" />
+        <label class="circle_txt_2" for="two"></label>
+    </div>
+    
+	<h2>雪碧图·部分</h2>
+        <input class="circle" id="img_one" type="radio" />
+        <label class="img_txt_1" for="img_one"></label>
+    </div>
+        <input class="circle" id="img_two" type="checkbox" />
+        <label class="img_txt_2" for="img_two"></label>
+    </div>
+</body>
+</html>
