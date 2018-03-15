@@ -1,0 +1,60 @@
+@charset "utf-8";
+/* CSS Document */
+#all{width:1150px;text-align:center;}
+.shareImg,.shareImgInformation
+{
+	width:150px;height:150px;float:left;margin:20px 20px 0 0;
+}
+.shareBlock,.shareBlockTwoRows
+{
+	margin-bottom:100px;
+	width:700px;height:500px;
+	padding:0 0 20px 20px;
+	background-color:rgba(255,255,255,0.2);
+}
+.shareImgInformation
+{
+	background-color:white;
+}
+.shareImgInformation p
+{
+	padding:10px;line-height:50px;margin-top:15px;
+}
+
+#sharePicRight
+{
+	margin:50px 0 0 400px;
+}
+
+.shareBlockTwoRows
+{
+	width:700px;height:350px;
+}
+/*以上为右边部分*/
+#sharePicLeft
+{
+	width:300px;height:550px;margin:0 50px 0 0;
+	background-color:rgba(255,255,255,0.2);
+	position:fixed;
+}
+#sharePicLeft h2
+{
+	color:#e1e1e1;letter-spacing:20px;font-size:46px;font-family:楷体;font-weight:900;
+	margin-top:30px;text-align:right;padding-right:85px;
+	margin-bottom:50px;
+}
+#sharePicLeft p a
+{
+	text-decoration:none;
+	font-size:20px;
+	color:#e1e1e1;
+	line-height:50px;
+}
+#sharePicLeft p
+{
+	text-align:right;
+	padding-right:110px;
+}#sharePicLeft p a:hover
+{
+	color:white;
+}

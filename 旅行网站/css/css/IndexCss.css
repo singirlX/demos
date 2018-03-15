@@ -1,0 +1,302 @@
+@charset "utf-8";
+#all
+{
+	position:relative;top:-100px;
+}
+#banner
+{
+	position:relative;overflow:hidden;width:1200px;height:500px;
+	margin-bottom:80px;/*与下面内容隔开*/
+}
+.bannerLink,.bannerLink img
+{
+	width:895px;height:500px;
+}
+.bannerLink
+{
+	position:absolute;width:100px;top:0;
+	opacity:0;
+}
+#bannerOne
+{
+	opacity:1
+}
+.bannerButton
+{
+	width:25px;height:25px;border:none;background-color:rgba(255,255,255,0.6);
+	font-family:微软雅黑;font-size:16px;color:#666;font-weight:900;margin-right:13px;
+}
+.bannerButton:hover
+{
+	background-color:rgba(255,255,255,0.9);
+}
+#includeBanner
+{
+	overflow:hidden;
+	float:left;
+}
+#bannerListChoose
+{
+	position:absolute;
+	top:475px;left:970px;
+}
+.bannerWord
+{
+	margin-top:75px;
+	width:200px;height:350px;background-image:url(../images/bannerBorder.png);
+	float:right;
+	position:absolute;
+}
+.bannerWord h3
+{
+	width:25px;
+	position:absolute;left:-35px;top:-20px;
+	color:white;font-size:20px;
+	font-weight:700;
+}
+.bannerWord p
+{
+	padding:10px 25px;
+	color:white;text-align:right;
+	font-size:16px;
+}
+.bannerPMargin
+{
+	margin-top:70px;
+}
+#includeBannerWord
+{
+	float:left;
+	margin-left:970px;
+	margin-top:-10px;
+}
+.bannerWord
+{
+	opacity:0;
+}
+#bannerWordFirst
+{
+	opacity:1
+}
+
+/*banner轮播图部分*/
+
+.bestPlace ,.bestPlace img{
+	width:285px;height:150px;
+	margin:0 20px 100px 0;padding:0;float:left;
+	overflow:hidden;
+}
+#bestPlaceLast{margin-right:0;}
+.bestPlace 
+{
+	position:relative;
+}
+.bestPlaceExplain
+{
+	width:285px;height:150px;
+	position:absolute;left:0;top:0;
+	background-color:rgba(255,255,255,0.2);
+}
+.bestPlaceExplain p
+{
+	width:285px;height:50px;margin:0;padding:0;
+	position:absolute;bottom:0;background-color:rgba(255,255,255,0.8);
+	font-size:24px;text-align:center;letter-spacing:5px;line-height:50px;
+	color:rgba(151,38,38,0.9);font-weight:600;
+}
+/*精彩推荐部分（4张图片部分）*/
+#vedioPlaceTitle
+{
+	color:white;font-size:24px;
+	margin:0;padding:5px 10px;;overflow:hidden;
+	border:1px white solid;border-bottom:none;height:30px;line-height:30px;letter-spacing:2px;
+}
+#vedioPlaceMore
+{
+	float:right;text-decoration:none;
+	font-size:14px;color:white;background-color:rgba(255,255,255,0.2);
+	padding:0 10px;letter-spacing:1px;
+}
+#vedioPlaceMore:hover
+{
+	background-color:rgba(255,255,255,0.4);
+}
+.vedioPlace,.vedioPlace img
+{
+	width:590px;height:300px;float:left;margin-bottom:100px;
+}
+#vedioPlaceLast
+{
+	float:right;
+}
+
+#includeVedioPlaceOne,#includeVedioPlaceTwo
+{
+	position:relative;;width:590px;height:300px;
+}
+
+#includeVedioPlaceOne img,#includeVedioPlaceTwo img
+{
+	position:absolute;left:0px;top:0xp;
+}
+/*纪录片部分（2张图片部分）*/	
+#placeBlock
+{
+	float:left;
+}
+#includeNowPlace,
+#includeTitlePlace,
+#includeChinaPlace
+{
+	width:895px;height:500px;
+	margin-bottom:50px;
+	background-color:white;
+	overflow:hidden;
+}
+#nowPlaceTitle,
+#titlePlaceTitle,
+#chinaPlaceTitle,
+#travelerTitle/*此行为旅行家的标题设置*/
+{
+	padding:10px;margin:10px;
+	border-left:5px #333 solid;
+	height:30px;line-height:30px;
+	color:#333;font-size:24px;font-weight:700;letter-spacing:2px;
+}
+#includeNowPlacePic,
+#includeTitlePlacePic,
+#includeChinaPlacePic
+{
+	float:left;
+	width:400px;height:350px;
+	position:relative;
+	margin-left:10px;
+	margin-bottom:20px;/*此行只是为了与下面的more部分形成视觉隔离*/
+}
+.nowPlacePicLink,
+.titlePlacePicLink,
+.chinaPlacePicLink
+{
+	display:block;
+	width:400px;height:350px;
+	position:absolute;left:0;top:0;
+}
+#nowPlaceWord,
+#titlePlaceWord,
+#chinaPlaceWord
+{
+	margin:0;padding:0;list-style:none;
+	width:470px;height:350px;
+	background-image:url(../images/IndexLinkBg2.jpg);
+	float:left;
+}
+#titlePlaceWord
+{
+	background-image:url(../images/IndexLinkBg3.jpg);
+}
+#chinaPlaceWord
+{
+	background-image:url(../images/IndexLinkBg.jpg);
+}
+.nowPlaceLink,
+.titlePlaceLink,
+.chinaPlaceLink
+{
+	color:rgb(107,154,210);font-size:26px;font-family:楷体;font-weight:700;
+	text-decoration:none;display:block;	
+}
+#nowPlaceWord li,
+#titlePlaceWord li,
+#chinaPlaceWord li
+{
+	height:70px;width:100%;
+    line-height:60px;
+	background-color:rgba(65,98,124,0)
+}
+.nowPlaceLinkExplain,
+.titlePlaceLinkExplain,
+.chinaPlaceLinkExplain
+{
+	text-align:right;
+	font-size:14px;font-weight:600;color:#999;font-family:微软雅黑;
+	margin-left:20px;
+}
+.nowPlaceLinkLike,
+.titlePlaceLinkLike,
+.chinaPlaceLinkLike
+{
+	height:20px;
+	padding:5px;
+	font-size:12px;
+	font-family:微软雅黑;
+	color:white;
+	background-color:rgba(98,30,65,0.8);
+    line-height:20px;
+	float:right;margin:15px 5px;
+}
+.nowPlaceIcon,
+.titlePlaceIcon,
+.chinaPlaceIcon
+{
+	float:left;display:inline;
+	width:40px;height:40px;padding:10px 0 0 10px;
+}
+.nowPlaceLinkName,
+.titlePlaceLinkName,
+.chinaPlaceLinkName
+{
+    float:left;
+}
+.more
+{
+	display:block;clear:both;padding:20px 15px;
+	text-decoration:none;
+	border-top:2px #666 solid;text-align:right;font-size:16px;
+	font-family:微软雅黑;font-weight:700;letter-spacing:0;color:#333;
+	background-color:rgba(102,102,102,0.1);
+	color:rgb(35,142,197);
+}
+.more:hover{background-color:rgba(102,102,102,0.25);font-weight:800;letter-spacing:2px;}
+
+/*旅游分区部分*/	
+#travelerBlock
+{
+	float:right;
+	width:200px;height:1600px;overflow:hidden;background-color:rgba(255,255,255,0.3);
+	text-align:right;
+}
+#travelerTitle
+{
+	border-left:none;border-right:5px white solid;color:white;margin-right:20px;
+}
+#travelerBlock img
+{
+	width:150px;height:150px;margin-right:20px;
+}
+.travelerExplian
+{
+	width:140px;height:50px;margin:0 0 9px 30px;padding:5px;
+	background-color:#FFF;line-height:25px;
+	text-align:right;font-size:13px;color:#666;
+}
+/*旅行家部分*/	
+#footerLeft,#footerRight
+{
+	width:50%;height:100px;padding:30px 0 40px;line-height:40px;float:left;
+	background-color:rgba(51,51,51,0.5);color:rgba(255,255,255,0.8);
+	letter-spacing:1px;
+}
+#footerLeft
+{
+	text-align:right;
+}
+#footerLeft h2
+{
+	height:120px;padding-right:30px;
+	border-right:2px rgba(255,255,255,0.8) solid;
+}
+#footerRight p
+{
+	padding-left:30px;
+}
+/*页脚部分*/	

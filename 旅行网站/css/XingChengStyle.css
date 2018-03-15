@@ -1,0 +1,88 @@
+@charset "utf-8";
+/* CSS Document */
+/**************************************************************************************/
+body
+{
+	background-color:#666;
+}
+
+/************************************************************************************/
+#all
+{
+	width:1200px;height:3400px;
+	background-color:rgba(255,255,255,0.9);
+	color:rgb(125,168,174);
+}
+#tripWebTitle
+{
+	width:100%;
+	margin:0;padding:0;
+	height:100px;
+	background-color:rgb(164,199,205);color:white;
+	text-align:center;line-height:100px;font-family:楷体;font-weight:900;
+}
+/************************************************************************************/
+#all
+{
+	background-color:rgba(255,255,255,0.3);height:3700px;
+}
+	
+#tripWebTitle
+{
+	background-color:rgba(255,255,255,0.5);
+	color:rgb(159,4,0);
+	font-family:微软雅黑;letter-spacing:4px;
+}
+/************************************************************************************/
+.includeTripBlock
+{
+	overflow:hidden;
+	width:1000px;
+	margin:50px;border-bottom:3px rgb(164,199,205) solid;
+	padding:10px;
+}
+/************************************************************************************/
+.includeTripBlock
+{
+	border-bottom:30px rgb(164,199,205) solid;
+	background-color:white;
+}
+
+/************************************************************************************/
+.includeTripBlock:hover{border-bottom:30px rgb(97,141,176) solid;}
+/************************************************************************************/
+.includeTripBlock>img
+{
+	float:left;width:200px;height:150px;
+}
+.includeTripPlaceExplain
+{
+	float:left;height:100px;line-height:55px;margin:50px 0 0 20px;
+}
+.TripPlaceExplainTitle
+{
+	display:block;
+	font-size:26px;font-family:楷体;font-weight:900;text-decoration:none;color:rgb(125,168,174);
+}
+.TripPlaceExplainTitle:hover
+{
+	color:#F60;
+}
+.TripPlaceName:hover
+{
+	margin-right:20px;font-size:28px;
+}
+.TripPlaceExplain
+{
+	font-size:18px;font-family:黑体;
+}
+.TripPlaceIcon
+{
+	position:relative;top:5px;
+	width:20px;height:20px;margin-right:5px;
+}
+.TripPlaceIntroduce
+{
+	line-height:10px;width:600px;height:50px;margin-right:30px;
+	display:inline;font-size:16px;color:#666;
+}

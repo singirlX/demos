@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>机票·酒店</title>
+<style>
+h1
+{
+	font-family:微软雅黑;font-weight:500;
+	color:#333;font-size:28px;
+	text-align:center;
+	margin-top:300px;
+}
+span
+{
+	font-family:楷体;font-weight:900;font-size:40px;margin-left:30px;
+	color:#09F;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1 id="mainText">将在<span id="timeNum">5</span>秒后跳转至合作网站<span>携程旅行网……</span></h1>
+
+<script>
+window.onload=function(){changeTimeNum();setTimeout("newDoc()",5000)}
+function changeTimeNum()
+{
+	var timeNum=document.getElementById("timeNum");
+	var mainText=document.getElementById("mainText");
+	var num=5;
+	setInterval(function()
+	{
+		num--;
+		timeNum.innerHTML=num;
+		if(num<=0)
+		{
+			mainText.innerHTML="正在跳转……";
+		}
+	},1000);
+}
+
+function newDoc()
+ {
+  window.location.replace("http://u.ctrip.com/union/adredirect.aspx?keyword=index&src=baidu81")
+ }
+
+</script>
+</body>
+</html>

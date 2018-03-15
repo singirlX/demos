@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* CSS Document */
+body{margin:0;padding:0;background-color:#666;font-family:微软雅黑;}
+#all{width:1200px;margin:0 auto;}/*整体居中所需容器*/
+h2,p{margin:0;padding:0}/*提前清除本页中所有h2标签和p标签的自带样式*/
+#header
+{
+	width:100%;height:100px;
+	background-image:url(../images/menubg.png);
+}
+#menu
+{
+	height:100px;margin:0 auto;;padding:0;
+	overflow:hidden;
+	text-align:center;
+	float:right;
+}
+.menuList
+{
+	list-style-type:none;float:left;
+	height:50px;width:150px;
+	margin:50px 0 0 0;
+	border-right:1px white solid;
+	line-height:50px;
+	color:white;font-size:20px;letter-spacing:2px;font-weight:700;
+}
+.menuList:hover{border-top:2px white solid;background-color:rgba(255,255,255,0.1)}
+.menuList a img
+{
+	width:70px;height:70px;
+}
+#logo
+{
+	width:70px;/* "1200-150*6-1*6-70" */
+	border:none;line-height:none;
+	float:left;margin-top:25px;
+}
+#menuListOne{border-left:1px white solid;}/*首页选项加左边框线*/
+/*以上为菜单栏部分CSS设置*/
+#top
+{
+	position:fixed;bottom:0;right:0;
+	margin:10px;padding:2px 5px;height:25px;line-height:20px;opacity:0.5;
+	border:1px white solid;text-decoration:none;color:white;font-size:30px;font-weight:700;
+}
+#top:hover
+{
+	background-color:rgba(255,255,255,0.2);opacity:0.8;
+}
+/*以上为TOP部分CSS设置*/
+

@@ -1,0 +1,74 @@
+@charset "utf-8";
+/* CSS Document */
+body
+{
+	background-image:url(../images/bgImageAfter.jpg);zoom:85%;background-attachment:fixed;
+}
+
+#beforeAll
+{
+	width:1200px;height:3400px;background-color:rgba(102,102,102,0.75);z-index:-5;position:absolute;
+}
+#top
+{
+	opacity:0.7;
+}
+/************通用部分***********************************/
+
+.bannerButton
+{
+	cursor:pointer;
+}
+#sdlrIcon
+{
+	width:1200px;
+}
+#sdlrIcon img
+{
+	width:285px;height:100px;
+	padding:0 7px;
+	float:left;overflow:hidden;
+	position:relative;top:14px;z-index:2;
+}
+
+#hatOne,#hatTwo,#hatThree
+{
+	width:200px;height:140px;
+	position:absolute;
+	left:800px;
+}
+#hatOne
+{
+	top:1415px;
+}
+#hatTwo
+{
+	top:2035px;
+}
+#hatThree
+{
+	top:2655px;
+}
+#includeNowPlace,
+#includeTitlePlace,
+#includeChinaPlace
+{
+	margin-bottom:120px;
+}
+#nowPlaceWord,
+#titlePlaceWord,
+#chinaPlaceWord
+{
+	background-image:url(../images/159.png);
+}
+.travelerExplian
+{
+	margin-bottom:29px;
+}
+
+#footerLeft,#footerRight
+{
+	background-color:rgba(51,51,51,0.8);
+}
+
+

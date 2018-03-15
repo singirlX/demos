@@ -1,0 +1,54 @@
+@charset "utf-8";
+/* CSS Document */
+
+#feelingsLeft
+{
+	margin-top:50px;position:fixed;
+}
+#FeelingsTitle
+{
+	margin-top:30px;
+	color:white;
+	letter-spacing:1px;
+}
+.FeelingsTitleRight
+{
+	font-size:16px;margin-left:25px;
+	font-weight:600;
+}
+#feelingsRight,#feelingsLeft
+{
+	float:left;
+}
+#feelingsRight
+{
+	margin-left:350px;
+}
+#feelingsRight img
+{
+	width:400px;height:290px;
+	margin:50px 10px 0;
+}
+.feelingsRightOne
+{
+	width:400px;height:160px;
+	margin-left:10px;
+    background-color:rgba(255,255,255,0.9);
+}
+#feelingsRightLeft,#feelingsRightRight
+{
+	float:left;
+}
+#feelingsRightLeft h4,#feelingsRightRight h4
+{
+	margin:0;
+	padding:10px 30px 0;
+}
+#feelingsRightLeft p,#feelingsRightRight p
+{
+	padding:15px 0 0 300px;letter-spacing:1px;font-family:黑体;
+}
+h4 span
+{
+	font-size:12px;color:rgb(164,199,205);
+}

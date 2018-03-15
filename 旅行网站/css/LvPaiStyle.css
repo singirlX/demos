@@ -1,0 +1,98 @@
+@charset "utf-8";
+/* CSS Document */
+#all{width:1150px;text-align:center;}
+
+.shareImg,.shareImgInformation
+{
+	width:150px;height:150px;float:left;margin:20px 20px 0 0;
+}
+.shareBlock,.shareBlockTwoRows
+{
+	margin-bottom:100px;
+	width:700px;height:500px;
+	padding:0 0 20px 20px;
+	background-color:rgba(255,255,255,0.2);
+}
+.shareImgInformation
+{
+	background-color:white;
+}
+.shareImgInformation p
+{
+	padding:10px;line-height:50px;margin-top:15px;
+}
+
+#sharePicRight
+{
+	margin:50px 0 0 400px;
+}
+
+.shareBlockTwoRows
+{
+	width:700px;height:350px;
+}
+/*以上为右边部分*/
+#sharePicLeft
+{
+	width:300px;height:550px;margin:0 50px 0 0;
+	background-color:rgba(255,255,255,0.2);
+	position:fixed;
+}
+#sharePicLeft h2
+{
+	color:#e1e1e1;letter-spacing:20px;font-size:46px;font-family:楷体;font-weight:900;
+	margin-top:30px;text-align:right;padding-right:85px;
+	margin-bottom:50px;
+}
+#sharePicLeft p a
+{
+	text-decoration:none;
+	font-size:20px;
+	color:#e1e1e1;
+	line-height:50px;
+}
+#sharePicLeft p
+{
+	text-align:right;
+	padding-right:110px;
+}#sharePicLeft p a:hover
+{
+	color:white;
+}
+/*1111111111111*****************************************************************************************************************/
+.shareImg
+{
+	cursor:pointer;
+}
+
+#includeBigPic
+{
+	width:100%;height:100%;background-color:rgba(0,0,0,0.65);
+	position:fixed;top:0;bottom:0;
+	z-index:-2;opacity:0;
+}
+#BigPicBox
+{
+	width:40%;
+	height:40%;
+	background-color:white;
+	position:fixed;top:30%;left:30%;
+	border:20px rgba(97,141,176,0.85) solid;
+}
+#BigPic
+{
+	width:650px;height:550px;
+	display:block;margin:50px auto;
+}
+#closeBigPic
+{
+	width:50px;height:50px;
+	background-color:rgba(102,102,102,0.6);
+	cursor:pointer;
+	position:absolute;top:0;right:0;
+}
+#closeBigPic:hover
+{
+	background-color:rgba(97,141,176,0.6);
+}
+/*2222222222222*****************************************************************************************************************/
